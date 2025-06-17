@@ -1,0 +1,29 @@
+2025-06-17 12:22:39,152 [INFO] Data loaders created.
+2025-06-17 12:22:39,189 [INFO] Model initialized.
+2025-06-17 12:26:43,758 [INFO] Training completed successfully.
+2025-06-17 12:26:43,767 [INFO] Best model weights saved to weights/best_model.pth
+2025-06-17 12:26:44,554 [ERROR] An error occurred during execution: Metrics.calculate_metrics() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "/Users/mac/Desktop/учеба/ML_portfolio/mnist_CNN/main.py", line 37, in main
+    metrics = Metrics.calculate_metrics(y_true, y_pred)
+TypeError: Metrics.calculate_metrics() takes 1 positional argument but 2 were given
+2025-06-17 12:39:46,420 [INFO] Data loaders created.
+2025-06-17 12:39:46,457 [INFO] Model initialized.
+2025-06-17 12:44:08,471 [INFO] Data loaders created.
+2025-06-17 12:44:08,491 [INFO] Model initialized.
+2025-06-17 12:47:59,810 [INFO] Training completed successfully.
+2025-06-17 12:47:59,819 [INFO] Best model weights saved to weights/best_model.pth
+2025-06-17 12:48:00,516 [ERROR] An error occurred during execution: 'Metrics' object is not subscriptable
+Traceback (most recent call last):
+  File "/Users/mac/Desktop/учеба/ML_portfolio/mnist_CNN/main.py", line 39, in main
+    logger.info(f"Accuracy:  {metrics['accuracy']:.4f}")
+                              ~~~~~~~^^^^^^^^^^^^
+TypeError: 'Metrics' object is not subscriptable
+2025-06-17 12:54:13,678 [INFO] Data loaders created.
+2025-06-17 12:54:13,704 [INFO] Model initialized.
+2025-06-17 12:57:06,956 [INFO] Training completed successfully.
+2025-06-17 12:57:06,965 [INFO] Best model weights saved to weights/best_model.pth
+2025-06-17 12:57:07,674 [INFO] Accuracy:  0.9861
+2025-06-17 12:57:07,674 [INFO] Precision: 0.9861
+2025-06-17 12:57:07,674 [INFO] Recall:    0.9860
+2025-06-17 12:57:07,674 [INFO] F1 Score:  0.9860
