@@ -1,0 +1,10 @@
+train:
+  batch_size: 64
+  lr: 0.01
+  max_epochs: 50
+  patience: 5
+
+paths:
+  log_dir: runs/
+  weights_dir: weights/
+  best_model_name: mnist_best.pth

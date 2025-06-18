@@ -4,10 +4,22 @@ from src.metrics import Metrics
 from src.model import MNISTModel
 from src.train import Trainer
 from src.logger import Logger
+from config import config
 
 import torch
+import argparse
+import yaml
+
+with open("config.yaml", "r") as f:
+    config = yaml.safe_load(f)
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="MNIST Training and Evaluation")
+    parser.add_argument("--mode", type=str, choices=["train", "eval"], default="train", help="Mode to run: train or eval")
+    return parser.parse_args()
 
 def main():
+    args = parse_args()
     logger = Logger(name='main', log_file='logs/main.log').get_logger()
 
     try:
@@ -26,12 +38,17 @@ def main():
         model = MNISTModel().to(device)
         logger.info("Model initialized.")
 
-        trainer = Trainer(model=model, train_loader=train_loader, val_loader=val_loader, device=device)
-        train_losses, val_losses = trainer.fit()
-        logger.info("Training completed successfully.")
+        if args.mode == "train":
+            trainer = Trainer(model=model, train_loader=train_loader, val_loader=val_loader, device=device, config=config)
+            train_losses, val_losses = trainer.fit()
+            logger.info("Training completed successfully.")
 
-        torch.save(trainer.best_model_wts, 'weights/best_model.pth')
-        logger.info("Best model weights saved to weights/best_model.pth")
+            torch.save(trainer.best_model_wts, 'weights/best_model.pth')
+            logger.info("Best model weights saved to weights/best_model.pth")
+
+        elif args.mode == "eval":
+            model.load_state_dict(torch.load(config["paths"]["weights_dir"] + config["paths"]["best_model_name"]))
+            logger.info("Loaded trained model for evaluation.")
 
         y_true, y_pred = trainer.evaluate(test_loader)
         metrics = Metrics(y_true, y_pred)

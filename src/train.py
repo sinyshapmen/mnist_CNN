@@ -8,19 +8,23 @@ import torch.optim as optim
 from src.logger import Logger
 from torch.utils.tensorboard import SummaryWriter
 
+from config import config
+
 
 
 class Trainer:
-    def __init__(self, model, train_loader, val_loader, device='cpu', lr=0.1, patience=5, max_epochs=50):
+    def __init__(self, model, train_loader, val_loader, device='cpu'):
         self.model = model.to(device)
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.device = device
 
+        self.lr = config["train"]["lr"]
+        self.patience = config["train"]["patience"]
+        self.max_epochs = config["train"]["max_epochs"]
+
         self.loss_fn = nn.CrossEntropyLoss()
-        self.optimizer = optim.SGD(self.model.parameters(), lr=lr)
-        self.patience = patience
-        self.max_epochs = max_epochs
+        self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr)
 
         self.best_loss = float('inf')
         self.counter = 0
@@ -29,10 +33,10 @@ class Trainer:
         self.train_losses = []
         self.val_losses = []
 
-        self.weights_path = "weights/best_model.pth"
+        self.weights_path = os.path.join(config["paths"]["weights_dir"], config["paths"]["best_model_name"])
         self.logger = Logger(name='trainer', log_file='logs/train.log').get_logger()
 
-        log_dir = os.path.join("runs", datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
+        log_dir = os.path.join(config["paths"]["log_dir"], datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
         self.writer = SummaryWriter(log_dir=log_dir)
         self.logger.info(f"TensorBoard logs will be saved to: {log_dir}")
 
