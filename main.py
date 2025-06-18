@@ -4,7 +4,6 @@ from src.metrics import Metrics
 from src.model import MNISTModel
 from src.train import Trainer
 from src.logger import Logger
-from config import config
 
 import torch
 import argparse

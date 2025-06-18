@@ -8,12 +8,11 @@ import torch.optim as optim
 from src.logger import Logger
 from torch.utils.tensorboard import SummaryWriter
 
-from config import config
-
-
 
 class Trainer:
-    def __init__(self, model, train_loader, val_loader, device='cpu'):
+    def __init__(self, model, train_loader, val_loader, device='cpu', config=None):
+        if config is None:
+            raise ValueError("config must be provided")
         self.model = model.to(device)
         self.train_loader = train_loader
         self.val_loader = val_loader
